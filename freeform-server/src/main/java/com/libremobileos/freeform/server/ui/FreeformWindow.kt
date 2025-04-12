@@ -1,6 +1,7 @@
 package com.libremobileos.freeform.server.ui
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.graphics.PixelFormat
@@ -296,11 +297,11 @@ class FreeformWindow(
         runCatching {
             windowManager.addView(freeformLayout, windowParams)
             windowManagerInt.registerDisplaySecureContentListener(this)
-            if (freeformView.isAvailable()) {
+            if (freeformView.isAvailable() && !ActivityManager.isHighEndGfx()) {
                 Slog.i(TAG, "freeformView, surfaceTexture=${freeformView.surfaceTexture!=null} width=${freeformView.width} height=${freeformView.height}")
-                onSurfaceTextureAvailable(freeformView.surfaceTexture, freeformView.width, freeformView.height)
-            } else {
-                Slog.e(TAG, "freeformView is not available")
+                freeformView.surfaceTexture?.let {
+                    onSurfaceTextureAvailable(it, freeformView.width, freeformView.height)
+                }
             }
         }.onFailure {
             Slog.e(TAG, "addView failed: $it")
