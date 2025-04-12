@@ -296,6 +296,12 @@ class FreeformWindow(
         runCatching {
             windowManager.addView(freeformLayout, windowParams)
             windowManagerInt.registerDisplaySecureContentListener(this)
+            if (freeformView.isAvailable()) {
+                Slog.i(TAG, "freeformView, surfaceTexture=${freeformView.surfaceTexture!=null} width=${freeformView.width} height=${freeformView.height}")
+                onSurfaceTextureAvailable(freeformView.surfaceTexture, freeformView.width, freeformView.height)
+            } else {
+                Slog.e(TAG, "freeformView is not available")
+            }
         }.onFailure {
             Slog.e(TAG, "addView failed: $it")
             return false
