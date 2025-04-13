@@ -297,11 +297,12 @@ class FreeformWindow(
         runCatching {
             windowManager.addView(freeformLayout, windowParams)
             windowManagerInt.registerDisplaySecureContentListener(this)
-            Slog.i(TAG, "freeformView, isAvailable=${freeformView.isAvailable(} isHardwareDrawingAcceleationEnabled=${ActivityManager.isHighEndGfx()}")
+            Slog.i(TAG, "freeformView, isAvailable=${freeformView.isAvailable()} isHardwareDrawingAcceleationEnabled=${ActivityManager.isHighEndGfx()}")
             if (freeformView.isAvailable() && !ActivityManager.isHighEndGfx()) {
                 Slog.i(TAG, "freeformView, surfaceTexture=${freeformView.surfaceTexture!=null} width=${freeformView.width} height=${freeformView.height}")
+                Slog.i(TAG, "freeformView, surfaceTexture=${freeformView.surfaceTexture!=null} width=${freeformConfig.freeformWidth} height=${freeformConfig.freeformHeight}")
                 freeformView.surfaceTexture?.let {
-                    onSurfaceTextureAvailable(it, freeformView.width, freeformView.height)
+                    onSurfaceTextureAvailable(it, freeformConfig.freeformWidth, freeformConfig.freeformHeight)
                 }
             }
         }.onFailure {
