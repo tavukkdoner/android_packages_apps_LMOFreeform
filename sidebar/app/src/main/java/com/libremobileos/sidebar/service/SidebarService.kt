@@ -15,6 +15,7 @@ import android.os.IBinder
 import android.os.ServiceManager
 import android.os.UserHandle
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.widget.Toast
@@ -50,6 +51,14 @@ class SidebarService : Service(), SharedPreferences.OnSharedPreferenceChangeList
             setOnTouchListener { _, event ->
                 gestureManager.onTouchEvent(event)
                 true
+            }
+            setOnApplyWindowInsetsListener { view, insets ->
+                view.visibility = if(!insets.isVisible(WindowInsets.Type.systemBars())){
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
+                return@setOnApplyWindowInsetsListener insets
             }
         }
     }
