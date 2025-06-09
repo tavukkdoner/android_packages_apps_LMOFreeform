@@ -53,8 +53,8 @@ class SidebarService : Service(), SharedPreferences.OnSharedPreferenceChangeList
                 true
             }
             setOnApplyWindowInsetsListener { view, insets ->
-                view.visibility = if(!insets.isVisible(WindowInsets.Type.systemBars())){
-                    View.GONE
+                view.visibility = if(!insets.isVisible(WindowInsets.Type.navigationBars())){
+                    View.INVISIBLE
                 } else {
                     View.VISIBLE
                 }
