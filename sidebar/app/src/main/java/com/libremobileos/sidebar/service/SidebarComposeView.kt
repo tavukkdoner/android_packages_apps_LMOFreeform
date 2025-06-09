@@ -15,9 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
 import com.android.settingslib.spa.framework.compose.rememberDrawablePainter
 import com.libremobileos.sidebar.bean.AppInfo
 
@@ -52,7 +50,9 @@ fun SidebarComposeView(
             }
             items(sidebarAppList) { appInfo ->
                 Image(
-                    bitmap = appInfo.icon.toBitmap().asImageBitmap(),
+                    painter = rememberDrawablePainter(
+                        drawable = appInfo.icon
+                    ),
                     contentDescription = appInfo.label,
                     modifier = Modifier
                         .size(50.dp)
