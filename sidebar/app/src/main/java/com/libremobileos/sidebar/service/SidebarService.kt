@@ -16,6 +16,7 @@ import android.os.ServiceManager
 import android.os.UserHandle
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowInsetsAnimation
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.widget.Toast
@@ -52,14 +53,20 @@ class SidebarService : Service(), SharedPreferences.OnSharedPreferenceChangeList
                 gestureManager.onTouchEvent(event)
                 true
             }
-            setOnApplyWindowInsetsListener { view, insets ->
-                view.visibility = if(!insets.isVisible(WindowInsets.Type.navigationBars())){
-                    View.INVISIBLE
-                } else {
-                    View.VISIBLE
+            val sideView = this
+            setWindowInsetsAnimationCallback(object : WindowInsetsAnimation.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE){
+                override fun onProgress(
+                    insets: WindowInsets,
+                    runningAnimations: MutableList<WindowInsetsAnimation>
+                ): WindowInsets {
+                    sideView.visibility = if(!insets.isVisible(WindowInsets.Type.navigationBars())){
+                        View.INVISIBLE
+                    } else {
+                        View.VISIBLE
+                    }
+                    return insets
                 }
-                return@setOnApplyWindowInsetsListener insets
-            }
+            })
         }
     }
 
