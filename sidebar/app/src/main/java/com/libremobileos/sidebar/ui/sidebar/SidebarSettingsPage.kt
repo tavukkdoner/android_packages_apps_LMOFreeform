@@ -63,6 +63,7 @@ fun SidebarSettingsPage(
                         mainChecked.value = it
                         viewModel.setSidebarEnabled(it)
                         viewModel.deleteAllSidebarApps()
+                        viewModel.reloadAllAppList()
                     }
                 })
 

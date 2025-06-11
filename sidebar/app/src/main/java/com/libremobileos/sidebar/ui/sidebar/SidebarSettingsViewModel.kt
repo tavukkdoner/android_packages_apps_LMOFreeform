@@ -105,6 +105,11 @@ class SidebarSettingsViewModel(private val application: Application) : AndroidVi
     fun deleteAllSidebarApps() {
         repository.deleteAllSidebar()
     }
+	
+    fun reloadAllAppList() {
+        allAppList.clear()
+        initAllAppList()
+    }
 
     private fun initAllAppList() {
         viewModelScope.launch(Dispatchers.IO) {
