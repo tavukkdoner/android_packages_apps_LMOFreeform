@@ -62,9 +62,7 @@ fun SidebarSettingsPage(
                     override val onCheckedChange: (Boolean) -> Unit = {
                         mainChecked.value = it
                         viewModel.setSidebarEnabled(it)
-                        if(!it) {
-                            viewModel.deleteAllSidebarApps()
-                        }
+                        viewModel.deleteAllSidebarApps()
                     }
                 })
 
