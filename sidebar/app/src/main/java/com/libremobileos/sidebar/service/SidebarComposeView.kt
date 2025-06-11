@@ -79,7 +79,9 @@ fun SidebarComposeView(
                             adaptiveIconDrawable.monochrome
                         else appInfo.icon
                     ),
-                    colorFilter = if (isThemedIconsEnabled) {
+                    colorFilter = if (isThemedIconsEnabled &&
+                            adaptiveIconDrawable?.monochrome != null
+                        ) {
                         if (isDark) ColorFilter.tint(Color.White)
                         else ColorFilter.tint(Color.Black)
                     } else null,
